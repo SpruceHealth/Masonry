@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 cloudling. All rights reserved.
 //
 
+#define MAS_SHORTHAND
 #import "MASUtilities.h"
 #import "View+MASAdditions.h"
 #import "View+MASShorthandAdditions.h"

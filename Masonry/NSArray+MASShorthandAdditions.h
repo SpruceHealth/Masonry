@@ -8,6 +8,7 @@
 
 #import "NSArray+MASAdditions.h"
 
+#define MAS_SHORTHAND
 #ifdef MAS_SHORTHAND
 
 /**
