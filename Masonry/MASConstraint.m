@@ -62,21 +62,21 @@
 
 #pragma mark - MASLayoutPriority proxies
 
-- (MASConstraint * (^)())priorityLow {
+- (MASConstraint * (^)(void))priorityLow {
     return ^id{
         self.priority(MASLayoutPriorityDefaultLow);
         return self;
     };
 }
 
-- (MASConstraint * (^)())priorityMedium {
+- (MASConstraint * (^)(void))priorityMedium {
     return ^id{
         self.priority(MASLayoutPriorityDefaultMedium);
         return self;
     };
 }
 
-- (MASConstraint * (^)())priorityHigh {
+- (MASConstraint * (^)(void))priorityHigh {
     return ^id{
         self.priority(MASLayoutPriorityDefaultHigh);
         return self;
@@ -88,6 +88,13 @@
 - (MASConstraint * (^)(MASEdgeInsets))insets {
     return ^id(MASEdgeInsets insets){
         self.insets = insets;
+        return self;
+    };
+}
+
+- (MASConstraint * (^)(CGFloat))inset {
+    return ^id(CGFloat inset){
+        self.inset = inset;
         return self;
     };
 }
@@ -208,7 +215,14 @@
     return [self addConstraintWithLayoutAttribute:NSLayoutAttributeBaseline];
 }
 
-#if TARGET_OS_IPHONE
+- (MASConstraint *)firstBaseline {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeFirstBaseline];
+}
+- (MASConstraint *)lastBaseline {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLastBaseline];
+}
+
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 - (MASConstraint *)leftMargin {
     return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLeftMargin];
@@ -258,13 +272,15 @@
 
 - (void)setInsets:(MASEdgeInsets __unused)insets { MASMethodNotImplemented(); }
 
+- (void)setInset:(CGFloat __unused)inset { MASMethodNotImplemented(); }
+
 - (void)setSizeOffset:(CGSize __unused)sizeOffset { MASMethodNotImplemented(); }
 
 - (void)setCenterOffset:(CGPoint __unused)centerOffset { MASMethodNotImplemented(); }
 
 - (void)setOffset:(CGFloat __unused)offset { MASMethodNotImplemented(); }
 
-#if TARGET_OS_MAC && !TARGET_OS_IPHONE
+#if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_TV)
 
 - (MASConstraint *)animator { MASMethodNotImplemented(); }
 

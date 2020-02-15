@@ -18,10 +18,12 @@
 #import "MASExampleRemakeView.h"
 #import "MASExampleScrollView.h"
 #import "MASExampleLayoutGuideViewController.h"
+#import "MASExampleSafeAreaLayoutGuideViewController.h"
 #import "MASExampleArrayView.h"
 #import "MASExampleAttributeChainingView.h"
 #import "MASExampleAspectFitView.h"
 #import "MASExampleMarginView.h"
+#import "MASExampleDistributeView.h"
 
 static NSString * const kMASCellReuseIdentifier = @"kMASCellReuseIdentifier";
 
@@ -66,12 +68,19 @@ static NSString * const kMASCellReuseIdentifier = @"kMASCellReuseIdentifier";
                                               viewClass:MASExampleAttributeChainingView.class],
         [[MASExampleViewController alloc] initWithTitle:@"Margins"
                                               viewClass:MASExampleMarginView.class],
+        [[MASExampleViewController alloc] initWithTitle:@"Views Distribute"
+                                              viewClass:MASExampleDistributeView.class],
 
     ];
     
     if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)])
     {
         self.exampleControllers = [self.exampleControllers arrayByAddingObject:[[MASExampleLayoutGuideViewController alloc] init]];
+    }
+    
+    if ([UIView instancesRespondToSelector:@selector(safeAreaLayoutGuide)])
+    {
+        self.exampleControllers = [self.exampleControllers arrayByAddingObject:[[MASExampleSafeAreaLayoutGuideViewController alloc] init]];
     }
     
     return self;

@@ -1,5 +1,5 @@
 //
-//  MASConstraintBuilder.m
+//  MASConstraintMaker.m
 //  Masonry
 //
 //  Created by Jonas Budelmann on 20/07/13.
@@ -78,7 +78,8 @@
     __unused MASAttribute anyAttribute = (MASAttributeLeft | MASAttributeRight | MASAttributeTop | MASAttributeBottom | MASAttributeLeading
                                           | MASAttributeTrailing | MASAttributeWidth | MASAttributeHeight | MASAttributeCenterX
                                           | MASAttributeCenterY | MASAttributeBaseline
-#if TARGET_OS_IPHONE
+                                          | MASAttributeFirstBaseline | MASAttributeLastBaseline
+#if TARGET_OS_IPHONE || TARGET_OS_TV
                                           | MASAttributeLeftMargin | MASAttributeRightMargin | MASAttributeTopMargin | MASAttributeBottomMargin
                                           | MASAttributeLeadingMargin | MASAttributeTrailingMargin | MASAttributeCenterXWithinMargins
                                           | MASAttributeCenterYWithinMargins
@@ -100,8 +101,10 @@
     if (attrs & MASAttributeCenterX) [attributes addObject:self.view.mas_centerX];
     if (attrs & MASAttributeCenterY) [attributes addObject:self.view.mas_centerY];
     if (attrs & MASAttributeBaseline) [attributes addObject:self.view.mas_baseline];
+    if (attrs & MASAttributeFirstBaseline) [attributes addObject:self.view.mas_firstBaseline];
+    if (attrs & MASAttributeLastBaseline) [attributes addObject:self.view.mas_lastBaseline];
     
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_TV
     
     if (attrs & MASAttributeLeftMargin) [attributes addObject:self.view.mas_leftMargin];
     if (attrs & MASAttributeRightMargin) [attributes addObject:self.view.mas_rightMargin];
@@ -182,7 +185,15 @@
     };
 }
 
-#if TARGET_OS_IPHONE
+- (MASConstraint *)firstBaseline {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeFirstBaseline];
+}
+
+- (MASConstraint *)lastBaseline {
+    return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLastBaseline];
+}
+
+#if TARGET_OS_IPHONE || TARGET_OS_TV
 
 - (MASConstraint *)leftMargin {
     return [self addConstraintWithLayoutAttribute:NSLayoutAttributeLeftMargin];
